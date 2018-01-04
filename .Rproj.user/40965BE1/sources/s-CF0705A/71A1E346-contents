@@ -1,0 +1,2 @@
+articles <- read.csv("data/articles.csv", stringsAsFactors = FALSE)
+

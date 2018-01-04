@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css?family=Lora|Open+Sans+Prata+Lobster');
+
+body, html {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+}
+
+a {
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
+}
+
+#header {
+  background-image: url("beatles.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+  color: white;
+  height: 80%;
+  width: 100%;
+  text-align: center;
+  /* border: 1px solid blue; */
+}
+
+#header #hero {
+  width: 30%;
+  min-width: 700px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+#footnotes {
+  padding-top: 5%;
+  font-size: 13px;
+  color: gray;
+  font-family: Prata;
+}
+
+.logo img{
+  margin-top: 30px;
+  /* border: 1px solid black; */
+}
+
+iframe {
+  padding-bottom: 5%;
+  min-height: 500px;
+}
+
+.seeMore img{
+  position: absolute;
+  bottom: 10;
+}
+
+p, h1, h2, h3, h4, h5, #footnotes {
+  padding-left: 50;
+  padding-right: 50;
+  line-height: 1.5;
+}
+
+p {
+  margin-top: 0;
+}
+
+h1 {
+  font-family: Prata;
+  font-weight: 100;
+  font-size: 70px;
+  margin-top 0;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 15px;
+  font-weight: 100;
+}
+
+h4 {
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#heroStats {
+  padding-top: 10px;
+  margin: 10px;
+}
+
+#stat {
+  padding-bottom: 5%;
+  width: 25%;
+  text-align: center;
+  /* border: 1px solid blue; */
+  float: left;
+}
+
+#stat h1, h2 {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#stat h2 {
+  font-family: "Open Sans";
+}
+
+#container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1500px;
+  /* border: 1px solid red; */
+}

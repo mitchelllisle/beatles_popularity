@@ -1,0 +1,95 @@
+---
+title: "BeatlesPlayground"
+author: "Mitchell Lisle"
+date: "31/12/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(jsonlite)
+library(highcharter)
+library(exploratory)
+library(treemap)
+library(viridisLite)
+
+source("R/ingestion.R")
+source("R/processing.R")
+source("R/visualisations.R")
+
+categories <- read.csv("data/categories.csv")
+articles <- read.csv("data/articles.csv")
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+categoryAnalysis <- articles %>%
+  select(maincategory) %>%
+  group_by(maincategory) %>%
+  summarise(count = n()) %>%
+  filter(maincategory != "") %>%
+  top_n(20, count) %>%
+  arrange(desc(count)) %>%
+  mutate(colours = colours(20))
+
+colours <- "#4A4A4A"
+categoryCount_chart(categoryAnalysis, colours, "Varied and Large Volumee of Types of Articles", "Number of articles for different topics", "The Beatles Main Wikipedia Page", "https://en.wikipedia.org/wiki/Special:WhatLinksHere/The_Beatles")
+
+colours <-   colorRampPalette(c("#C6DCF6", "#4A90E2", "#FD8936", "#D9092A"))
+pal <- viridis(n = 20, direction = 1)
+
+tm <- treemap(categoryAnalysis, index = "maincategory",
+              vSize = "count", vColor = "count",
+              type = "value", palette = pal)
+
+hctreemap(tm) %>% hc_title(text = "Test", align = "left")
+
+highchart() %>%
+  hc_xAxis(categories = as.factor(categoryAnalysis$maincategory), labels = list(enabled = TRUE)) %>%
+  hc_add_series_treemap(tm) %>%
+  hc_plotOptions(treemap = list(dataLabels = list(enabled = TRUE)))
+
+categoryTreemap_chart(categoryAnalysis, "Varied and Large Volumee of Types of Articles", "Number of articles for different topics", "The Beatles Main Wikipedia Page", "https://en.wikipedia.org/wiki/Special:WhatLinksHere/The_Beatles")
+
+```
+
+```{r}
+performerAnalysis <- articles %>%
+  select(performer) %>%
+  group_by(performer) %>%
+  mutate(performerTotal = n()) %>%
+  ungroup() %>%
+  group_by(performer, performerTotal) %>%
+  summarise(count = n()) %>%
+  filter(performer %nin% c("The Beatles", "John Lennon", "George Harrison", "Ringo Starr", "Paul McCartney", "", "Wings")) %>%
+  ungroup() %>%
+  top_n(20, performerTotal) %>%
+  arrange(desc(count))
+
+colours <- "#D9092A"
+performerCount_chart(performerAnalysis, colours, "Popular Artists Influences", "Number of articles that an Artist references The Beatles", "The Beatles Main Wikipedia Page", "https://en.wikipedia.org/wiki/Special:WhatLinksHere/The_Beatles")
+```
+
+```{r}
+datesAnalysis <- articles %>%
+  mutate(dates = if_else(dateofinception == "", dateofbirth, dateofinception)) %>%
+  mutate(dates = if_else(dates == "", publicationdate, dates)) %>%
+  filter(dates != "") %>%
+  select(dates) %>%
+  mutate(dates = substring(dates, 1, 4)) %>%
+  mutate(dates = if_else(dates <= 1949, "< 1950", dates)) %>%
+  # filter(dates %nin% c(1960, "< 1950")) %>%
+  group_by(dates) %>%
+  summarise(count = n())
+
+datesAnalysis$rollingAvg <- zoo::rollmean(datesAnalysis$count, 5, fill = "extend")
+
+  # mutate(rowNum = row_number()) %>%
+  # arrange(dates)
+
+colours <- "#FD8936"
+datesCount_chart(datesAnalysis, colours, "Time Period References", "Number of articles related to a time a year that mention The Beatles", "The Beatles Main Wikipedia Page", "https://en.wikipedia.org/wiki/Special:WhatLinksHere/The_Beatles")
+
+```
+

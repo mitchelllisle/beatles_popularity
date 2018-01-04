@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1514797260328.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6594F12",
+    "lastKnownWriteTime" : 1515027037,
+    "last_content_update" : 1515027037431,
+    "path" : "~/Documents/mlr/beatles_influence/R/processing.R",
+    "project_path" : "R/processing.R",
+    "properties" : {
+        "cursorPosition" : "14,3",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

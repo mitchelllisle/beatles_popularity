@@ -1,0 +1,23 @@
+articles <- beatlesInfluence %>% select(articleId, articleTitle)
+articlesToImport <- beatlesInfluenceEntityCodes %>% left_join(articles) %>%
+  select(articleId, articleTitle, instanceOfId, subclassId, inceptionTime, dateOfBirth,performer, publicationDate)
+
+write.csv(articlesToImport, "~/Desktop/articlesToImport.csv", row.names = FALSE, quote = TRUE)
+
+categories <- read.csv("data/categories.csv", stringsAsFactors = FALSE) %>% select(-X)
+
+dates <- beatlesInfluenceEntityCodes %>% select(inceptionTime, InstanceOf, articleId, dateOfBirth) %>% 
+  mutate(dates = if_else(is.na(inceptionTime), dateOfBirth, inceptionTime)) %>%
+  mutate(dates = stringr::str_replace_all(dates, "\\+", "")) %>%
+  mutate(dates = lubridate::year(as.Date(dates))) %>%
+  filter(!is.na(dates)) %>%
+  group_by(dates, InstanceOf) %>%
+  mutate(dates = if_else(dates <= 1940, "Pre-1940", dates)) %>%
+  mutate(rowNum = row_number())
+  summarise(count = n())
+
+
+hchart(dates, hcaes(dates, rowNum), type = "scatter") %>% hc_plotOptions(bar = list(stacking = "normal"))
+
+secondaryCategories <- beatlesInfluenceEntityCodes %>% select(subclassId) %>% distinct() %>% filter(!is.na(subclassId))
+performers <- beatlesInfluenceEntityCodes %>% select(performer) %>% distinct() %>% filter(!is.na(performer))
