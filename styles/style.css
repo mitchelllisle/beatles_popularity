@@ -27,14 +27,29 @@ a {
 }
 
 #header #hero {
-  width: 30%;
-  min-width: 700px;
+  width: 20%;
+  min-width: 650px;
   position: absolute;
   top: 40%;
   left: 50%;
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+}
+
+#hero h1 {
+color: #FF6A7C;
+font-family: Roboto;
+font-weight: bold;
+font-size: 100px;
+}
+
+#hero h2 {
+color: #FF6A7C;
+}
+
+#hero h3 {
+color: #FF6A7C;
 }
 
 #footnotes {
@@ -44,9 +59,16 @@ a {
   font-family: Prata;
 }
 
-.logo img{
-  margin-top: 30px;
+.logo {
+  font-family: Prata;
+  font-size: 30px;
+  color: #FF6A7C;
+  font-weight: 100;
   /* border: 1px solid black; */
+}
+
+.logo img {
+  margin-top: 30;
 }
 
 iframe {
@@ -77,12 +99,12 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 500;
 }
 
 h3 {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 100;
 }
 
@@ -121,4 +143,12 @@ h4 {
   width: 100%;
   max-width: 1500px;
   /* border: 1px solid red; */
+}
+
+@media only screen and (max-width: 320px) {
+
+   h1 {
+      font-size: 5px;
+   }
+
 }
